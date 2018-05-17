@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "151191791783",
+    "firebase_url": "https://mondaymorning-fde1a.firebaseio.com",
+    "project_id": "mondaymorning-fde1a",
+    "storage_bucket": "mondaymorning-fde1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151191791783:android:053ed80c01d83cad",
+        "android_client_info": {
+          "package_name": "thesmader.com.mondaymorning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151191791783-th9iv3pceoqok3s9ssv35vfb9ta674rr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "thesmader.com.mondaymorning",
+            "certificate_hash": "c483a090db6a3720bbcfe126ec167cf61ccac6c6"
+          }
+        },
+        {
+          "client_id": "151191791783-nnuuj4uner7f4fgcpeh0u379bj1h15vj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM4N2egTlWoICRIGcd7ZgG75dzXvQHSrM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151191791783-nnuuj4uner7f4fgcpeh0u379bj1h15vj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

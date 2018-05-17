@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MondayMorning</string>
+    <string name="usrnme">username</string>
+    <string name="password">password</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+</resources>
