@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/news"
+        android:icon="@drawable/ic_search_black"
+        android:title="@string/news" />
+    <item
+        android:id="@+id/featured"
+        android:icon="@drawable/ic_menu_black"
+        android:title="@string/featured" />
+    <item
+        android:id="@+id/buzz"
+        android:icon="@drawable/logo_purple"
+        android:title="@string/buzz" />
+</menu>

@@ -2,15 +2,16 @@ package thesmader.com.mondaymorning;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
+//import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 public class Login extends AppCompatActivity {
 
-    private MaterialButton signUpBtn,logInBtn;
+    private Button signUpBtn, logInBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
