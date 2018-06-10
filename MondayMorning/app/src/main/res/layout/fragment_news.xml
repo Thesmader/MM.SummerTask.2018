@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".NewsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="News"
-        android:gravity="center"
-        android:textSize="40sp"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/news_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,6 +26,7 @@ public class ThisWeek extends AppCompatActivity {
     MenuInflater inflater;
     MenuItem mSearch;
     private BottomNavigationView bnv;
+    //RecyclerView news_recycler;
 
 
     @Override
@@ -34,11 +36,13 @@ public class ThisWeek extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_this_week);
+
         //Setting up the appbar
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //Adding tabs to the tabLayout
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("THIS WEEK"), 0);
@@ -49,6 +53,8 @@ public class ThisWeek extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
+
+
 
         //Handling bottom navigation clicks
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,15 +71,18 @@ public class ThisWeek extends AppCompatActivity {
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame, selectedFragment);
+                transaction.remove(selectedFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
                 return true;
             }
         });
 
-        //Manually displaying first fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, FeaturedFragment.newInstance());
-        transaction.commit();
+        //Manually displaying News fragment
+        /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, NewsFragment.newInstance());
+        transaction.addToBackStack(null);
+        transaction.commit();*/
 
         bnv.getMenu().getItem(0).setChecked(true);
     }
