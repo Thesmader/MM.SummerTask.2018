@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -47,13 +48,17 @@ public class ThisWeek extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("THIS WEEK"), 0);
         tabLayout.addTab(tabLayout.newTab().setText("CATEGORIES"), 1);
-        bnv = (BottomNavigationView) findViewById(R.id.bottom_nav);
 
         //Setup the PagerAdapter
         final ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
+        //BottomNavigationView
+        bnv = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        //BottomNavigationView Behavior
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bnv.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());
 
 
         //Handling bottom navigation clicks
@@ -85,6 +90,25 @@ public class ThisWeek extends AppCompatActivity {
         transaction.commit();*/
 
         bnv.getMenu().getItem(0).setChecked(true);
+
+        //TabLayout Clicks
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tab = tabLayout.getTabAt(1);
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
