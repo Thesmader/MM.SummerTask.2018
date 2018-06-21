@@ -1,6 +1,9 @@
 package thesmader.com.mondaymorning;
 
 import android.app.Fragment;
+import android.app.LauncherActivity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -19,6 +22,21 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ThisWeek extends AppCompatActivity {
 
@@ -38,6 +56,14 @@ public class ThisWeek extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_this_week);
 
+        SearchView sv;
+        sv = findViewById(R.id.ic_action_search);
+        //sv.setQueryHint("Search");
+        //int id = sv.getContext().getResources().getIdentifier("android:id/search_src_text",null, null);
+        //TextView textView = (TextView) sv.findViewById(id);
+        //textView.setTextColor(Color.BLACK);
+
+
         //Setting up the appbar
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -53,6 +79,7 @@ public class ThisWeek extends AppCompatActivity {
         final ViewPager viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
+
 
         //BottomNavigationView
         bnv = (BottomNavigationView) findViewById(R.id.bottom_nav);
@@ -73,11 +100,14 @@ public class ThisWeek extends AppCompatActivity {
                     case R.id.featured:
                         selectedFragment = FeaturedFragment.newInstance();
                         break;
+                    case R.id.buzz:
+                        selectedFragment = Buzz.newInstance();
+                        break;
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame, selectedFragment);
-                transaction.remove(selectedFragment);
-                transaction.addToBackStack(null);
+                //transaction.remove(selectedFragment);
+                //transaction.addToBackStack(null);
                 transaction.commit();
                 return true;
             }
@@ -92,10 +122,12 @@ public class ThisWeek extends AppCompatActivity {
         bnv.getMenu().getItem(0).setChecked(true);
 
         //TabLayout Clicks
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        /*tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab = tabLayout.getTabAt(1);
+                if (tab == tabLayout.getTabAt(1)){
+                    startActivity(new Intent(ThisWeek.this,CategoriesActivity.class));
+                }
 
             }
 
@@ -108,7 +140,7 @@ public class ThisWeek extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
+        });*/
     }
 
     @Override

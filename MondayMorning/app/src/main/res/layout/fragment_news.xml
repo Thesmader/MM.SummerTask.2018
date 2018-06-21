@@ -16,5 +16,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".NewsFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary" />
 <!--</FrameLayout>-->

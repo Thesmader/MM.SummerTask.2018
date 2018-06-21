@@ -52,6 +52,8 @@
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/ic_menu_black"
             app:popupTheme="@style/Theme.AppCompat.Light"
+            app:collapseIcon="@drawable/back"
+            app:subtitleTextColor="#000"
             app:titleTextColor="#000">
 
             <TextView

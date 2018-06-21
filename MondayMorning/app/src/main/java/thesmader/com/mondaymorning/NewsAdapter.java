@@ -15,14 +15,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
 
     Context ctx;
     private String[] mTitleset/*,mbyLineSet,mdateLineSet,mtagSet*/;
+    private List<AllNewsData> list;
 
-    public NewsAdapter(Context ct, String[] titleSet/*, String[] byLineSet, String[] dateLineSet, String[] tagSet*/) {
+    public NewsAdapter(Context ct, List<AllNewsData> listItems) {
         ctx = ct;
-        mTitleset = titleSet;
+        list = listItems;
 
     }
 
@@ -36,12 +39,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NewsHolder holder, final int position) {
-        holder.t1.setText(mTitleset[position]);
+        //holder.t1.setText(mTitleset[position]);
+        AllNewsData data = list.get(position);
+        holder.t1.setText(data.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mTitleset.length;
+        return list.size();
     }
 
     public class NewsHolder extends RecyclerView.ViewHolder {

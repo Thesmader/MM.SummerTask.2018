@@ -14,6 +14,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static android.support.v7.widget.DividerItemDecoration.HORIZONTAL;
@@ -30,6 +43,8 @@ public class NewsFragment extends Fragment {
 
     RecyclerView news_recycler;
     NewsAdapter newsAdapter;
+    private static final String DATA_URL_ALLNEWS = "http://mondaymorning.nitrkl.ac.in/api/post/get/thisweek";
+    private List<AllNewsData> listItems;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +65,19 @@ public class NewsFragment extends Fragment {
         //Recycler View
         news_recycler = rootView.findViewById(R.id.news_recycler);
         news_recycler.setHasFixedSize(true);
-        newsAdapter = new NewsAdapter(getContext(),mtitleSet/*,mbyLineSet,mdateLineSet,mtagSet*/);
+        //newsAdapter = new NewsAdapter(getContext(),mtitleSet/*,mbyLineSet,mdateLineSet,mtagSet*/);
+        //news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        //news_recycler.setAdapter(newsAdapter);
+
+        //RecyclerView items from server
+        listItems = new ArrayList<>();
+        loadRecyclerViewData();
+        newsAdapter = new NewsAdapter(getContext(), listItems);
         news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         news_recycler.setAdapter(newsAdapter);
-         //Divider
+
+
+        //Divider
         //DividerItemDecoration itemDecoration = new DividerItemDecoration(news_recycler.getContext(), HORIZONTAL);
         //news_recycler.addItemDecoration(itemDecoration);
 
@@ -78,5 +102,41 @@ public class NewsFragment extends Fragment {
         });*/
 
         return rootView;
+    }
+
+    private void loadRecyclerViewData() {
+
+        StringRequest request = new StringRequest(Request.Method.GET, DATA_URL_ALLNEWS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    JSONArray arr = obj.getJSONArray("posts");
+
+                    for (int i = 0; i < obj.length(); ++i) {
+                        JSONObject o = arr.getJSONObject(i);
+                        AllNewsData data = new AllNewsData(
+                                o.getString("post_title"),
+                                o.getJSONArray("authors").toString(),
+                                o.getString("post_publish_date"),
+                                o.getString("featured_image"));
+                        listItems.add(data);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+        RequestQueue rq = Volley.newRequestQueue(getContext());
+        rq.add(request);
+
+
     }
 }

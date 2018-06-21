@@ -14,7 +14,7 @@ public ViewPagerAdapter(FragmentManager fm){
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -24,8 +24,8 @@ public ViewPagerAdapter(FragmentManager fm){
                 return new NewsFragment();
             case 1:
                 return new FeaturedFragment();
-            //case 2:
-              //  return null;
+            case 2:
+                return new Buzz();
             default:
                 return null;
         }
