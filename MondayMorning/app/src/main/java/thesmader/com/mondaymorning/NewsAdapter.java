@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
@@ -42,6 +45,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         //holder.t1.setText(mTitleset[position]);
         AllNewsData data = list.get(position);
         holder.t1.setText(data.getTitle());
+        holder.t2.setText(data.getByLine());
+        holder.t3.setText(data.getDateLine());
+        //holder.t4.setText(data.getTag());
+        Glide.with(ctx).load(data.getImg_url())
+                .thumbnail(0.25f)
+                .apply(new RequestOptions().centerCrop())
+                .into(holder.article_card_image);
+
+
     }
 
     @Override
@@ -52,13 +64,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     public class NewsHolder extends RecyclerView.ViewHolder {
 
         public CardView cardView;
-        public TextView t1;
+        public TextView t1,t2,t3,t4;
+        public ImageView article_card_image;
 
         public NewsHolder(View itemView) {
             super(itemView);
 
             cardView = itemView.findViewById(R.id.card);
             t1 = itemView.findViewById(R.id.card_title_text);
+            t2 = itemView.findViewById(R.id.card_byline);
+            t3 = itemView.findViewById(R.id.card_date_line);
+            //t4 = itemView.findViewById(R.id.card_articleTag);
+            article_card_image = itemView.findViewById(R.id.card_imageview);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 StateListAnimator animator = AnimatorInflater.loadStateListAnimator(ctx, R.animator.lift);
                 cardView.setStateListAnimator(animator);

@@ -14,6 +14,7 @@
             android:id="@+id/article_collapse_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:title="@string/log_in"
             app:contentScrim="?attr/colorAccent"
             app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
