@@ -44,57 +44,56 @@
 
             <TextView
                 android:id="@+id/card_title_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/mrweather"
                 android:text="Title goes here"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:transitionName="title_to_article"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/card_imageview"
+                app:layout_constraintStart_toStartOf="@+id/card_imageview"
                 app:layout_constraintTop_toBottomOf="@+id/card_imageview" />
 
             <TextView
                 android:id="@+id/card_byline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="ByLine"
                 android:textSize="15sp"
                 android:transitionName="by_to_article"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/card_title_text"
                 app:layout_constraintTop_toBottomOf="@+id/card_title_text" />
 
             <TextView
                 android:id="@+id/card_date_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:text="MM DD, YYYY"
                 android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_title_text" />
-
-            <ImageView
-                android:id="@+id/card_noOfViews"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/views_counter"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/card_title_text"
                 app:layout_constraintTop_toBottomOf="@+id/card_byline" />
 
             <TextView
                 android:id="@+id/card_articleTag"
-                android:layout_width="wrap_content"
+                android:layout_width="136dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="tag"
+                android:textAlignment="viewEnd"
                 android:textAllCaps="true"
-                android:textSize="18sp"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_date_line" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/card_date_line"
+                app:layout_constraintTop_toBottomOf="@+id/card_title_text"
+                app:layout_constraintVertical_bias="1.0" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 

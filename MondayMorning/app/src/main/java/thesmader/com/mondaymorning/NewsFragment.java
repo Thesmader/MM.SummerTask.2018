@@ -127,7 +127,7 @@ public class NewsFragment extends Fragment {
                                 o.getString("post_title"),
                                 /*o.getJSONArray("authors").toString()*/ getAuthors(o),
                                 o.getString("post_publish_date"),
-                                o.getString("featured_image"));
+                                o.getString("featured_image"),getTag(o));
                         listItems.add(data);
                     }
                     Log.e(TAG, "Loaded " + obj.length());
@@ -160,6 +160,17 @@ public class NewsFragment extends Fragment {
                 else
                     str += arr_auth.get(i) + ",";
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public String getTag(JSONObject jo){
+        String str = "";
+        try {
+            JSONArray arr_categories = jo.getJSONArray("categories");
+            str = arr_categories.getJSONObject(0).getString("post_category_name");
         } catch (JSONException e) {
             e.printStackTrace();
         }

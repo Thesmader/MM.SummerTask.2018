@@ -47,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         holder.t1.setText(data.getTitle());
         holder.t2.setText(data.getByLine());
         holder.t3.setText(data.getDateLine());
-        //holder.t4.setText(data.getTag());
+        holder.t4.setText(data.getCategories());
         Glide.with(ctx).load(data.getImg_url())
                 .thumbnail(0.25f)
                 .apply(new RequestOptions().centerCrop())
@@ -74,7 +74,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
             t1 = itemView.findViewById(R.id.card_title_text);
             t2 = itemView.findViewById(R.id.card_byline);
             t3 = itemView.findViewById(R.id.card_date_line);
-            //t4 = itemView.findViewById(R.id.card_articleTag);
+            t4 = itemView.findViewById(R.id.card_articleTag);
             article_card_image = itemView.findViewById(R.id.card_imageview);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 StateListAnimator animator = AnimatorInflater.loadStateListAnimator(ctx, R.animator.lift);
