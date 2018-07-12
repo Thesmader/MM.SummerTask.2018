@@ -7,7 +7,9 @@ public class AllNewsData {
     private String categories;
     private String img_url = "http://mondaymorning.nitrkl.ac.in/uploads/post/big/";
 
-    public AllNewsData(String title, String byLine, String dateLine, String img_url, String categories) {
+    private int id;
+
+    public AllNewsData(String title, String byLine, String dateLine, String img_url, String categories, int id) {
         this.title = title;
         this.byLine = byLine;
         //System.arraycopy(byLine, 0, this.byLine, 0, byLine.length);
@@ -16,6 +18,7 @@ public class AllNewsData {
         //System.arraycopy(categories, 0, this.categories, 0, categories.length);
         this.categories = categories;
         //this.tag = tag;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -39,5 +42,5 @@ public class AllNewsData {
         return img_url;
     }
 
-
+    public int getId() { return id; }
 }

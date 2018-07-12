@@ -2,10 +2,14 @@ package thesmader.com.mondaymorning;
 
 import android.animation.AnimatorInflater;
 import android.animation.StateListAnimator;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,10 +29,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     Context ctx;
     private String[] mTitleset/*,mbyLineSet,mdateLineSet,mtagSet*/;
     private List<AllNewsData> list;
+    FragmentManager fm;
+    int post_id;
 
-    public NewsAdapter(Context ct, List<AllNewsData> listItems) {
+    public NewsAdapter(Context ct, List<AllNewsData> listItems,FragmentManager fm) {
         ctx = ct;
         list = listItems;
+        this.fm = fm;
 
     }
 
@@ -52,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
                 .thumbnail(0.25f)
                 .apply(new RequestOptions().centerCrop())
                 .into(holder.article_card_image);
-
+        post_id = data.getId();
 
     }
 
@@ -82,8 +89,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(ctx,ArticleActivity.class);
-                        ctx.startActivity(i);
+                        //For fragment
+                        /*android.support.v4.app.Fragment fragment = ArticleFragment.newInstance();
+                        fm.beginTransaction()
+                          .replace(R.id.frame, fragment)
+                          .addToBackStack(null)
+                          .commit();*/
+
+                        //For Activity
+                        Bundle b = new Bundle();
+                        b.putInt("POST_ID", post_id);
+                        ctx.startActivity(new Intent(ctx, ArticleActivity.class).putExtra("POST_INFO",b));
                     }
                 });
             }

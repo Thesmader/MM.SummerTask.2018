@@ -5,6 +5,7 @@ import android.animation.StateListAnimator;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,10 +76,10 @@ public class NewsFragment extends Fragment {
         //RecyclerView items from server
         listItems = new ArrayList<>();
         loadRecyclerViewData();
-        newsAdapter = new NewsAdapter(getContext(), listItems);
+        FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        newsAdapter = new NewsAdapter(getContext(), listItems, fm);
         news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         news_recycler.setAdapter(newsAdapter);
-
 
         //Divider
         //DividerItemDecoration itemDecoration = new DividerItemDecoration(news_recycler.getContext(), HORIZONTAL);
@@ -127,7 +128,9 @@ public class NewsFragment extends Fragment {
                                 o.getString("post_title"),
                                 /*o.getJSONArray("authors").toString()*/ getAuthors(o),
                                 o.getString("post_publish_date"),
-                                o.getString("featured_image"),getTag(o));
+                                o.getString("featured_image"),
+                                getTag(o),
+                                o.getInt("post_id"));
                         listItems.add(data);
                     }
                     Log.e(TAG, "Loaded " + obj.length());
