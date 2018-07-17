@@ -41,10 +41,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
 
     @NonNull
     @Override
-    public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewsHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View myView = inflater.inflate(R.layout.card_layout, parent, false);
-        return new NewsHolder(myView);
+        final NewsHolder nh = new NewsHolder(myView);
+        /*CardView cv = myView.findViewById(R.id.card);
+        cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+                b.putInt("POST_ID", post_id);
+                ctx.startActivity(new Intent(ctx, ArticleActivity.class).putExtra("POST_INFO",b));
+            }
+        });*/
+        return nh;
     }
 
     @Override
@@ -60,6 +70,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
                 .apply(new RequestOptions().centerCrop())
                 .into(holder.article_card_image);
         post_id = data.getId();
+        holder.itemView.findViewById(R.id.card).setTag(post_id);
+        holder.itemView.findViewById(R.id.card).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = (int) v.getTag();
+                Bundle b = new Bundle();
+                b.putInt("POST_ID", (int) v.getTag());
+                ctx.startActivity(new Intent(ctx, ArticleActivity.class).putExtra("POST_INFO", b));
+            }
+        });
 
     }
 
@@ -86,23 +106,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 StateListAnimator animator = AnimatorInflater.loadStateListAnimator(ctx, R.animator.lift);
                 cardView.setStateListAnimator(animator);
-                cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //For fragment
-                        /*android.support.v4.app.Fragment fragment = ArticleFragment.newInstance();
-                        fm.beginTransaction()
-                          .replace(R.id.frame, fragment)
-                          .addToBackStack(null)
-                          .commit();*/
-
-                        //For Activity
-                        Bundle b = new Bundle();
-                        b.putInt("POST_ID", post_id);
-                        ctx.startActivity(new Intent(ctx, ArticleActivity.class).putExtra("POST_INFO",b));
-                    }
-                });
             }
+            /*cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle b = new Bundle();
+                    b.putInt("POST_ID", post_id);
+                    ctx.startActivity(new Intent(ctx, ArticleActivity.class).putExtra("POST_INFO",b));
+                }
+            });*/
         }
     }
 }

@@ -52,7 +52,7 @@ public class ArticleAdapter extends RecyclerView.Adapter{
                     ((TextHolder) holder).textView.setText(Html.fromHtml(object.getText()));
                     break;
                 case ArticleModel.IMAGE:
-                    Glide.with(ct).load(object.getImageURL())
+                    Glide.with(ct).load(object.getText())
                             .thumbnail(0.25f)
                             .apply(new RequestOptions().centerCrop())
                             .into(((ImageHolder) holder).imageView);

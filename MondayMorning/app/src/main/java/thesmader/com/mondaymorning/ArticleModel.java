@@ -10,7 +10,7 @@ public class ArticleModel {
 
     public ArticleModel(int type, String imageURL, String text) {
         this.type = type;
-        this.imageURL += imageURL;
+        this.imageURL = imageURL;
         this.text = text;
     }
 

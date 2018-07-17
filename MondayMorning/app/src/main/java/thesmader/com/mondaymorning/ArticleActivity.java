@@ -8,6 +8,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -29,10 +32,15 @@ public class ArticleActivity extends AppCompatActivity {
     private ArrayList<ArticleModel> articleList = new ArrayList<>();
     int articleID;
     private String articleURLPrefix = "http://mondaymorning.nitrkl.ac.in/api/post/get/";
+    private String Me;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_this_week);
+
         setContentView(R.layout.activity_article);
 
         //Collapsing toolbar
@@ -58,6 +66,7 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     private void loadContent() {
+
         StringRequest request = new StringRequest(Request.Method.GET, articleURLPrefix, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -65,6 +74,7 @@ public class ArticleActivity extends AppCompatActivity {
                     JSONObject object = new JSONObject(response);
                     JSONObject jsonObject = object.getJSONObject("post");
                     JSONArray array = jsonObject.getJSONArray("post_content");
+                    Log.e(Me, Integer.toString(array.length()));
                     for(int i=0; i<array.length(); ++i){
                         JSONObject o = array.getJSONObject(i);
                         if (o.getInt("type") != 1) {
