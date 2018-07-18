@@ -179,4 +179,14 @@ public class NewsFragment extends Fragment {
         }
         return str;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadRecyclerViewData();
+        FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        newsAdapter = new NewsAdapter(getContext(), listItems, fm);
+        news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        news_recycler.setAdapter(newsAdapter);
+    }
 }

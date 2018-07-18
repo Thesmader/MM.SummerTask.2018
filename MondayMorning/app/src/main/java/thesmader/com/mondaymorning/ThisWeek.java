@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -49,7 +50,7 @@ public class ThisWeek extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Make the activity fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -74,6 +75,36 @@ public class ThisWeek extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("THIS WEEK"), 0);
         tabLayout.addTab(tabLayout.newTab().setText("CATEGORIES"), 1);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 1:
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame, NewsFragment.newInstance());
+                        transaction.remove(Categories.newInstance());
+                        transaction.commit();
+                        bnv.setVisibility(View.GONE);
+                        break;
+                    case 0:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame, Categories.newInstance());
+                        transaction.commit();
+                        bnv.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         //Setup the PagerAdapter
         final ViewPager viewPager = findViewById(R.id.view_pager);
@@ -86,6 +117,7 @@ public class ThisWeek extends AppCompatActivity {
         //BottomNavigationView Behavior
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bnv.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationViewBehavior());
+        bnv.setVisibility(View.VISIBLE);
 
 
         //Handling bottom navigation clicks
@@ -152,5 +184,9 @@ public class ThisWeek extends AppCompatActivity {
         mSearchView.setQueryHint("Search");
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    public void linClick(View view) {
+        startActivity(new Intent(this, Login.class));
     }
 }

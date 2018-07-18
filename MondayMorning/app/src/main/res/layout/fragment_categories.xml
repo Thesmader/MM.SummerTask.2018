@@ -3,11 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".Categories">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.constraint.ConstraintLayout
+    <GridView
+        android:id="@+id/categoryGrid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:columnWidth="150dp"
+        android:horizontalSpacing="20dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dp">
+
+    </GridView>
 
 </FrameLayout>

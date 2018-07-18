@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/fav"
+        android:icon="@drawable/fav"
+        android:title="Favourites" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/he"
+        android:icon="@drawable/health"
+        android:title="Health and Emergency" />
+    <item
+        android:id="@+id/halls"
+        android:icon="@drawable/halls"
+        android:title="Halls of Residence" />
+    <item
+        android:id="@+id/sac"
+        android:icon="@drawable/sac"
+        android:title="Student Activity Center" />
+    <item
+        android:id="@+id/contact"
+        android:icon="@drawable/contact"
+        android:title="Contact Us" />
+    <item
+        android:id="@+id/rating"
+        android:icon="@drawable/rating"
+        android:title="Rate App" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/share"
+        android:title="Share App" />
+    <item
+        android:id="@+id/bug"
+        android:icon="@drawable/bug"
+        android:title="Report Bug" />
+</menu>

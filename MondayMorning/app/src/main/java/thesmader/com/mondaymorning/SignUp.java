@@ -20,6 +20,7 @@ public class SignUp extends AppCompatActivity {
         //Make the activity fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setContentView(R.layout.activity_sign_up);
 
@@ -32,6 +33,15 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignUp.this,Login.class));
+                finish();
+            }
+        });
+
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUp.this, ThisWeek.class));
+                finish();
             }
         });
     }
