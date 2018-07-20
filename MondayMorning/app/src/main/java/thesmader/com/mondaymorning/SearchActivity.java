@@ -1,15 +1,13 @@
 package thesmader.com.mondaymorning;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,47 +24,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FeaturedFragment extends Fragment {
-    public static FeaturedFragment newInstance() {
-        FeaturedFragment fragment = new FeaturedFragment();
-        return fragment;
-    }
+public class SearchActivity extends AppCompatActivity {
 
-    private static final String TAG = "Hihi";
-    private static final String DATA_URL_FEATURED = "http://mondaymorning.nitrkl.ac.in/api/post/get/featured";
-    RecyclerView news_recycler;
-    NewsAdapter newsAdapter;
+    String DATA_URL_SEARCH = "http://mondaymorning.nitrkl.ac.in/api/search/";
+    private RecyclerView news_recycler;
     private List<AllNewsData> listItems;
+    private NewsAdapter newsAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_news, container, false);
-        news_recycler = v.findViewById(R.id.news_recycler);
+        setContentView(R.layout.activity_search);
+        news_recycler = findViewById(R.id.news_recycler);
         listItems = new ArrayList<>();
+        Intent i = getIntent();
+        DATA_URL_SEARCH += i.getStringExtra("query");
         loadRecyclerViewData();
-        FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        return v;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+        FragmentManager fm = Objects.requireNonNull(this.getSupportFragmentManager());
     }
 
     private void loadRecyclerViewData() {
-
-        StringRequest request = new StringRequest(Request.Method.GET, DATA_URL_FEATURED, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, DATA_URL_SEARCH, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject obj = new JSONObject(response);
-                    JSONArray arr = obj.getJSONObject("top4").getJSONArray("posts");
+                    JSONArray arr = obj.getJSONArray("posts");
                     //JSONArray arr_authors = obj.getJSONArray("posts").getJSONObject()
                     String authors[] = new String[arr.length()];
                     //System.arraycopy(authors, 0, arr.getString(0), 0, );
@@ -77,17 +60,16 @@ public class FeaturedFragment extends Fragment {
                         getAuthors(o);
                         AllNewsData data = new AllNewsData(
                                 o.getString("post_title"),
-                                /*o.getJSONArray("authors").toString()*/ getAuthors(o),
+                                getAuthors(o),
                                 o.getString("post_publish_date"),
                                 o.getString("featured_image"),
                                 getTag(o),
                                 o.getInt("post_id"));
                         listItems.add(data);
                     }
-                    Log.e(TAG, "Loaded " + arr.length());
-                    FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-                    newsAdapter = new NewsAdapter(getContext(), listItems, fm);
-                    news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+                    FragmentManager fm = Objects.requireNonNull(getSupportFragmentManager());
+                    newsAdapter = new NewsAdapter(SearchActivity.this, listItems, fm);
+                    news_recycler.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
                     news_recycler.setAdapter(newsAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -101,10 +83,8 @@ public class FeaturedFragment extends Fragment {
             }
         });
 
-        RequestQueue rq = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+        RequestQueue rq = Volley.newRequestQueue(SearchActivity.this);
         rq.add(request);
-
-
     }
 
     public String getAuthors(JSONObject jo) {

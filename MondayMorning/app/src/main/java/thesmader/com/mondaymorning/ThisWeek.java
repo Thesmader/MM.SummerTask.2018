@@ -10,12 +10,15 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,10 +45,12 @@ import java.util.List;
 public class ThisWeek extends AppCompatActivity {
 
     Typeface typeface;
+    DrawerLayout mDrawer;
     Toolbar mToolbar;
     MenuInflater inflater;
     MenuItem mSearch;
     private BottomNavigationView bnv;
+    private ViewPager viewPager;
     //RecyclerView news_recycler;
 
 
@@ -66,8 +71,16 @@ public class ThisWeek extends AppCompatActivity {
 
 
         //Setting up the appbar
+        mDrawer = findViewById(R.id.drawer);
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_menu_black);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawer.openDrawer(GravityCompat.START);
+            }
+        });
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -80,17 +93,22 @@ public class ThisWeek extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 1:
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame, NewsFragment.newInstance());
                         transaction.remove(Categories.newInstance());
-                        transaction.commit();
-                        bnv.setVisibility(View.GONE);
+                        transaction.commit();*/
+                        //setItem(3);
+                        setItem(3);
+                        //bnv.setVisibility(View.GONE);
                         break;
                     case 0:
+                        /*
                         transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame, Categories.newInstance());
-                        transaction.commit();
-                        bnv.setVisibility(View.VISIBLE);
+                        transaction.commit();*/
+                        setItem(0);
+                        //setItem(0);
+                        //bnv.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -107,72 +125,63 @@ public class ThisWeek extends AppCompatActivity {
         });
 
         //Setup the PagerAdapter
-        final ViewPager viewPager = findViewById(R.id.view_pager);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
+        viewPager = findViewById(R.id.view_pager);
+        setUpViewPager(viewPager);
 
 
-        //BottomNavigationView
-        bnv = (BottomNavigationView) findViewById(R.id.bottom_nav);
-        //BottomNavigationView Behavior
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bnv.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationViewBehavior());
-        bnv.setVisibility(View.VISIBLE);
+
 
 
         //Handling bottom navigation clicks
+
+        bnv = findViewById(R.id.bottom_nav);
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 android.support.v4.app.Fragment selectedFragment = null;
                 switch (item.getItemId()){
                     case R.id.news:
-                        selectedFragment = NewsFragment.newInstance();
+                        setItem(0);
+
                         break;
                     case R.id.featured:
-                        selectedFragment = FeaturedFragment.newInstance();
+                        setItem(1);
                         break;
                     case R.id.buzz:
-                        selectedFragment = Buzz.newInstance();
+                        setItem(2);
                         break;
                 }
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame, selectedFragment);
+                //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                //transaction.replace(R.id.frame, selectedFragment);
                 //transaction.remove(selectedFragment);
                 //transaction.addToBackStack(null);
-                transaction.commit();
+                //transaction.commit();
                 return true;
             }
         });
 
-        //Manually displaying News fragment
-        /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, NewsFragment.newInstance());
-        transaction.addToBackStack(null);
-        transaction.commit();*/
-
         bnv.getMenu().getItem(0).setChecked(true);
+        //BottomNavigationView Behavior
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bnv.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());
+        //bnv.setVisibility(View.VISIBLE);
 
-        //TabLayout Clicks
-        /*tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab == tabLayout.getTabAt(1)){
-                    startActivity(new Intent(ThisWeek.this,CategoriesActivity.class));
-                }
+    }
 
-            }
+    private void setUpTabPager(ViewPager viewPager) {
+        TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ThisWeekFragment(), "ThisWeek");
+        adapter.addFragment(new Categories(), "Categories");
+    }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+    private void setUpViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new NewsFragment(), "AllNews");
+        adapter.addFragment(new FeaturedFragment(), "Featured");
+        adapter.addFragment(new Buzz(), "Buzz");
+        adapter.addFragment(new Categories(), "Categories");
+        viewPager.setAdapter(adapter);
 
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });*/
     }
 
     @Override
@@ -182,8 +191,31 @@ public class ThisWeek extends AppCompatActivity {
         mSearch = menu.findItem(R.id.ic_action_search);
         SearchView mSearchView = (SearchView) mSearch.getActionView();
         mSearchView.setQueryHint("Search");
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent searchIntent = new Intent(ThisWeek.this, SearchActivity.class);
+                searchIntent.putExtra("query", query);
+                startActivity(searchIntent);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    public void setItem(int fragmentNumber) {
+        viewPager.setCurrentItem(fragmentNumber);
+    }
+
+    public void setTabItem(int fragNumber) {
+        viewPager.setCurrentItem(fragNumber);
     }
 
     public void linClick(View view) {

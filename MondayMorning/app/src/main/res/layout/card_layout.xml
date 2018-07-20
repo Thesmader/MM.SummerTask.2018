@@ -16,7 +16,7 @@
         android:layout_marginStart="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:stateListAnimator="@animator/lift"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
@@ -78,7 +78,7 @@
 
             <TextView
                 android:id="@+id/card_articleTag"
-                android:layout_width="136dp"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"

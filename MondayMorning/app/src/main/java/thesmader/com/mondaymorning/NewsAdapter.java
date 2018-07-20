@@ -60,7 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     @Override
     public void onBindViewHolder(@NonNull NewsHolder holder, final int position) {
         //holder.t1.setText(mTitleset[position]);
-        AllNewsData data = list.get(position);
+        final AllNewsData data = list.get(position);
         holder.t1.setText(data.getTitle());
         holder.t2.setText(data.getByLine());
         holder.t3.setText(data.getDateLine());
@@ -77,6 +77,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
                 int id = (int) v.getTag();
                 Bundle b = new Bundle();
                 b.putInt("POST_ID", (int) v.getTag());
+                b.putString("POST_IMAGE", data.getImg_url());
                 ctx.startActivity(new Intent(ctx, ArticleActivity.class).putExtra("POST_INFO", b));
             }
         });

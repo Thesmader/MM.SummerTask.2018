@@ -77,9 +77,12 @@ public class NewsFragment extends Fragment {
         listItems = new ArrayList<>();
         loadRecyclerViewData();
         FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        newsAdapter = new NewsAdapter(getContext(), listItems, fm);
-        news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        news_recycler.setAdapter(newsAdapter);
+
+
+        //following 3 lines were the culprit for the major problem in loading ui. B)
+        //newsAdapter = new NewsAdapter(getContext(), listItems, fm);
+        //news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        //news_recycler.setAdapter(newsAdapter);
 
         //Divider
         //DividerItemDecoration itemDecoration = new DividerItemDecoration(news_recycler.getContext(), HORIZONTAL);
@@ -133,7 +136,11 @@ public class NewsFragment extends Fragment {
                                 o.getInt("post_id"));
                         listItems.add(data);
                     }
-                    Log.e(TAG, "Loaded " + obj.length());
+                    Log.e(TAG, "Loaded " + arr.length());
+                    FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+                    newsAdapter = new NewsAdapter(getContext(), listItems, fm);
+                    news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+                    news_recycler.setAdapter(newsAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -178,15 +185,5 @@ public class NewsFragment extends Fragment {
             e.printStackTrace();
         }
         return str;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadRecyclerViewData();
-        FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        newsAdapter = new NewsAdapter(getContext(), listItems, fm);
-        news_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        news_recycler.setAdapter(newsAdapter);
     }
 }
