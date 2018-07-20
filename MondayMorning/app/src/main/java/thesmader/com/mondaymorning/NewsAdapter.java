@@ -67,7 +67,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         holder.t4.setText(data.getCategories());
         Glide.with(ctx).load(data.getImg_url())
                 .thumbnail(0.25f)
-                .apply(new RequestOptions().centerCrop())
+                //.apply(new RequestOptions().centerCrop())
                 .into(holder.article_card_image);
         post_id = data.getId();
         holder.itemView.findViewById(R.id.card).setTag(post_id);

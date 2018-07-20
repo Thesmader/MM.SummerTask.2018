@@ -54,7 +54,7 @@ public class ArticleAdapter extends RecyclerView.Adapter{
                 case ArticleModel.IMAGE:
                     Glide.with(ct).load(object.getText())
                             .thumbnail(0.25f)
-                            .apply(new RequestOptions().centerCrop())
+                            //.apply(new RequestOptions().centerCrop())
                             .into(((ImageHolder) holder).imageView);
                     break;
             }
