@@ -40,7 +40,7 @@ public class ArticleActivity extends AppCompatActivity {
     private ArrayList<ArticleModel> articleList = new ArrayList<>();
     int articleID;
     private String articleURLPrefix = "http://mondaymorning.nitrkl.ac.in/api/post/get/", imageURL;
-    private String Me;
+    private String shareURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,12 @@ public class ArticleActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.article_ctl_image);
         Glide.with(this).load(imageURL).thumbnail(0.25f).apply(new RequestOptions().centerCrop()).into(imageView);
 
+
+        //Recycler view and server work
+        //articleList.add(new ArticleModel(ArticleModel.TEXT,0,"Hello Hey!!!"));
+        //articleList.add(new ArticleModel(ArticleModel.IMAGE, R.drawable.smiley,"Image"));
+        loadContent();
+
         //share fab click
         final FloatingActionButton fab = findViewById(R.id.share_btn);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -102,10 +108,7 @@ public class ArticleActivity extends AppCompatActivity {
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "Title");
-                    String sAux = "\n";
-                    sAux = sAux + articleURLPrefix + "\n\n";
-                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    i.putExtra(Intent.EXTRA_TEXT, shareURL);
                     startActivity(Intent.createChooser(i, "Share via"));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -113,11 +116,6 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
-
-        //Recycler view and server work
-        //articleList.add(new ArticleModel(ArticleModel.TEXT,0,"Hello Hey!!!"));
-        //articleList.add(new ArticleModel(ArticleModel.IMAGE, R.drawable.smiley,"Image"));
-        loadContent();
         ArticleAdapter adapter = new ArticleAdapter(articleList,ArticleActivity.this,2);
         RecyclerView rv = findViewById(R.id.article_recycler);
         rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
@@ -148,7 +146,7 @@ public class ArticleActivity extends AppCompatActivity {
                     JSONObject object = new JSONObject(response);
                     JSONObject jsonObject = object.getJSONObject("post");
                     JSONArray array = jsonObject.getJSONArray("post_content");
-                    Log.e(Me, Integer.toString(array.length()));
+                    shareURL =  jsonObject.getString("post_url");
                     for(int i=0; i<array.length(); ++i){
                         JSONObject o = array.getJSONObject(i);
                         if (o.getInt("type") != 1) {

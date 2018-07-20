@@ -100,7 +100,7 @@ public class Category extends Fragment {
                 args.putString("suffix", selectedItem);
                 fragment.setArguments(args);
                 FragmentManager manager = getChildFragmentManager();
-                manager.beginTransaction().replace(R.id.frame, fragment).addToBackStack(null).commit();
+                manager.beginTransaction().replace(R.id.frame, fragment).commit();
             }
         });
         return v;
