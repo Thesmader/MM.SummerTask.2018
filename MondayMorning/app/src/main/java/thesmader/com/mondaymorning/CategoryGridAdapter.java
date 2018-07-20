@@ -37,7 +37,7 @@ public class CategoryGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View grid;
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -48,6 +48,12 @@ public class CategoryGridAdapter extends BaseAdapter {
             ImageView imageView = (ImageView) grid.findViewById(R.id.category_image);
             textView.setText(web[position]);
             imageView.setImageResource(image[position]);
+            grid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         } else {
             grid = (View) convertView;
         }

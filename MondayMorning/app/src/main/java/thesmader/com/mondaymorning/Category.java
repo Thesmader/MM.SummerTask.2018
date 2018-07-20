@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 
@@ -69,7 +71,38 @@ public class Category extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_category, container, false);
         gv = v.findViewById(R.id.categoryGrid);
-        //gv.setOnItemClickListener();
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = "";
+                Fragment fragment = new IndividualCategory();
+                Bundle args = new Bundle();
+                switch (position) {
+                    case 0:
+                        selectedItem = "departments";
+                        break;
+                    case 1:
+                        selectedItem = "campus";
+                        break;
+                    case 2:
+                        selectedItem = "views";
+                        break;
+                    case 3:
+                        selectedItem = "career";
+                        break;
+                    case 4:
+                        selectedItem = "alumni";
+                        break;
+                    case 5:
+                        selectedItem = "dd&cwc";
+                        break;
+                }
+                args.putString("suffix", selectedItem);
+                fragment.setArguments(args);
+                FragmentManager manager = getChildFragmentManager();
+                manager.beginTransaction().replace(R.id.frame, fragment).addToBackStack(null).commit();
+            }
+        });
         return v;
     }
 
